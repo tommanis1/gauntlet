@@ -1,0 +1,1 @@
+./modules/p4c/build/p4compare ../firewall.p4,../firewall2.p4
