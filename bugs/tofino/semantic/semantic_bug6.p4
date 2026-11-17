@@ -1,1 +1,0 @@
-../../bf-p4c/semantic/fixed/semantic_bug6.p4

@@ -21,37 +21,12 @@ done
 # fetch submodules and update apt
 echo "Initializing submodules..."
 git submodule update --init --recursive
-sudo apt-get update
 
 SRC_DIR="$(pwd)"
 MODULE_DIR="$(pwd)/modules"
 
 echo "Installing P4C dependencies..."
 
-# Install pip and python
-sudo apt install -y python3
-sudo apt install -y python3-pip
-sudo apt install -y python3-setuptools
-
-# Install the p4 compiler dependencies
-sudo apt install -y bison \
-                    build-essential \
-                    cmake \
-                    git \
-                    ninja-build \
-                    clang \
-                    lld \
-                    flex \
-                    libboost-dev \
-                    libboost-graph-dev \
-                    libboost-iostreams-dev \
-                    libfl-dev \
-                    libgc-dev \
-                    libgmp-dev \
-                    pkg-config
-
-# This only works on Ubuntu 18+
-sudo apt install -y libprotoc-dev protobuf-compiler
 
 # install python packages using pip
 pip3 install --user wheel
@@ -119,11 +94,10 @@ fi
 # grab the toz3 extension for the p4 compiler
 mkdir -p ${MODULE_DIR}/p4c/extensions
 # only install bludgeon if we are not running in CI
-if [ "$RUN_CI" == "ON" ]; then
-    echo "Also linking extra modules..."
-    ln -sf ${MODULE_DIR}/bludgeon ${MODULE_DIR}/p4c/extensions/bludgeon
-fi
-ln -sf ${MODULE_DIR}/toz3 ${MODULE_DIR}/p4c/extensions/toz3
+echo "Also linking extra modules..."
+ln -sf ${MODULE_DIR}/bludgeon ${MODULE_DIR}/p4c/extensions/bludgeon
+
+# ln -sf ${MODULE_DIR}/toz3 ${MODULE_DIR}/p4c/extensions/toz3
 
 # build the p4 compiler
 echo "Building P4C..."
